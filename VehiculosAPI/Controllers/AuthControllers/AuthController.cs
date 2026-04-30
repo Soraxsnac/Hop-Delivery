@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VehiculosAPI.DTOs.AuthDTOs;
 using VehiculosAPI.Services.AuthServices;
 
@@ -31,11 +30,7 @@ namespace VehiculosAPI.Controllers.AuthControllers
         public async Task<IActionResult> Login([FromBody] UserDTO userDTO)
         {
             var result = await authService.Login(userDTO);
-            if (result)
-            {
-                return Ok();
-            }
-            return Unauthorized();
+            return Ok(result);
         }
     }
 }
