@@ -23,6 +23,6 @@ public partial class CatMarcaPage : ContentPage
         var response = await apiService.PostAsync<CrearCatMarcaDTO>("catalogos/nuevamarca", crearCatMarcaDTO);
 
 
-        await DisplayAlert("Error", "No se pudo crear la marca", "OK");
+        //await DisplayAlert("Error", "No se pudo crear la marca", "OK");
     }
 }

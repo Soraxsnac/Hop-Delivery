@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using VehiculosMAUI.Services.HttpServices;
+using Syncfusion.Maui.Core.Hosting;
 
 
 namespace VehiculosMAUI
@@ -11,6 +12,7 @@ namespace VehiculosMAUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
