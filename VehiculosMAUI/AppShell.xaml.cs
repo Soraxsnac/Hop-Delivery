@@ -9,6 +9,7 @@ namespace VehiculosMAUI
         {
             InitializeComponent();
 
+            Routing.RegisterRoute(nameof(LoginPage), typeof(Views.LoginPage));
             Routing.RegisterRoute(nameof(CatMarcaPage), typeof(Views.Catalogos.CatMarcaPage));
             Routing.RegisterRoute(nameof(RegistrarVehiculoPage), typeof(Views.RegistrarVehiculoPage));
         }

@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VehiculosAPI.Entities;
@@ -7,6 +8,7 @@ using VehiculosAPI.Services;
 
 namespace VehiculosAPI.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     public class VehiculoController : ControllerBase
@@ -54,6 +56,7 @@ namespace VehiculosAPI.Controllers
             return Ok(nuevoVehiculo);
         }
 
+
         [HttpGet("fromdb")]
         public async Task<ActionResult<List<Vehiculo>>> GetAllVehiculosFromDB()
         {
@@ -64,6 +67,7 @@ namespace VehiculosAPI.Controllers
             }
             return Ok(vehiculos);
         }
+
 
         [HttpPut("actualizarvehiculo")]
         public async Task<ActionResult<Vehiculo>> ActualizarVehiculo([FromBody] Vehiculo vehiculo)

@@ -19,6 +19,7 @@ public class ApiService : IApiService
 
     public async Task<T> GetAsync<T>(string endpoint)
     {
+        await GetTokenAsync();
         var response = await _httpClient.GetAsync(endpoint);
 
         response.EnsureSuccessStatusCode();
@@ -33,6 +34,7 @@ public class ApiService : IApiService
 
     public async Task<T> GetByIdAsync<T>(string endpoint, int id)
     {
+        await GetTokenAsync();
         var response = await _httpClient.GetAsync($"{endpoint}/{id}");
 
         if (!response.IsSuccessStatusCode)
@@ -44,6 +46,7 @@ public class ApiService : IApiService
 
     public async Task<T> PostAsync<T>(string endpoint, object data)
     {
+        await GetTokenAsync();
         var json = JsonSerializer.Serialize(data);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -58,6 +61,7 @@ public class ApiService : IApiService
 
     public async Task<T> PutAsync<T>(string endpoint, int id, object data)
     {
+        await GetTokenAsync();
         var json = JsonSerializer.Serialize(data);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -72,9 +76,15 @@ public class ApiService : IApiService
 
     public async Task<bool> DeleteAsync(string endpoint, int id)
     {
+        await GetTokenAsync();
         var response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
         return response.IsSuccessStatusCode;
     }
 
-   
+   private async Task GetTokenAsync()
+    {
+        var token = await SecureStorage.GetAsync("TokenApp");
+
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+    }
 }
