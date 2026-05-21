@@ -1,17 +1,15 @@
 ﻿using VehiculosMAUI.Views;
-using VehiculosMAUI.Views.Catalogos;
 
-namespace VehiculosMAUI
+namespace VehiculosMAUI;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            Routing.RegisterRoute(nameof(LoginPage), typeof(Views.LoginPage));
-            Routing.RegisterRoute(nameof(CatMarcaPage), typeof(Views.Catalogos.CatMarcaPage));
-            Routing.RegisterRoute(nameof(RegistrarVehiculoPage), typeof(Views.RegistrarVehiculoPage));
-        }
+        // Las rutas DEBEN ir aquí adentro, no afuera
+        Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+        Routing.RegisterRoute(nameof(AgregarCervezaPage), typeof(AgregarCervezaPage));
     }
 }

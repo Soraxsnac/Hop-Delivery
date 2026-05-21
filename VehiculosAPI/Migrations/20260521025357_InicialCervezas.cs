@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VehiculosAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityMigration : Migration
+    public partial class InicialCervezas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +48,37 @@ namespace VehiculosAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CatMarcas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Marca = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CatMarcas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cervezas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Tipo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IBU = table.Column<int>(type: "int", nullable: false),
+                    ABV = table.Column<double>(type: "float", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    ImagenURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cervezas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,6 +244,12 @@ namespace VehiculosAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CatMarcas");
+
+            migrationBuilder.DropTable(
+                name: "Cervezas");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

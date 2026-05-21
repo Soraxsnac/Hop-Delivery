@@ -1,24 +1,33 @@
-﻿namespace VehiculosMAUI
+﻿using VehiculosMAUI.Services.HttpServices;
+using VehiculosMAUI.Views;
+
+namespace VehiculosMAUI;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    private readonly IApiService _apiService;
+
+    public MainPage(IApiService apiService)
     {
-        int count = 0;
+        InitializeComponent();
+        _apiService = apiService;
+    }
 
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await CargarCervezasAsync();
+    }
 
-        private void OnCounterClicked(object? sender, EventArgs e)
-        {
-            count++;
+    private async Task CargarCervezasAsync()
+    {
+        var cervezas = await _apiService.ObtenerCervezasAsync();
+        CervezasCollection.ItemsSource = cervezas;
+    }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
+    // Evento que nos lleva a la pantalla de crear
+    private async void OnAgregarClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(AgregarCervezaPage));
     }
 }

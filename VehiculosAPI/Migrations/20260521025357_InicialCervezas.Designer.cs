@@ -12,8 +12,8 @@ using VehiculosAPI.Data;
 namespace VehiculosAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260429224405_IdentityMigration")]
-    partial class IdentityMigration
+    [Migration("20260521025357_InicialCervezas")]
+    partial class InicialCervezas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -240,7 +240,7 @@ namespace VehiculosAPI.Migrations
                     b.ToTable("CatMarcas");
                 });
 
-            modelBuilder.Entity("VehiculosAPI.Entities.Vehiculo", b =>
+            modelBuilder.Entity("VehiculosAPI.Entities.Cerveza", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,26 +248,34 @@ namespace VehiculosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("MarcaId")
+                    b.Property<double>("ABV")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("IBU")
                         .HasColumnType("int");
 
-                    b.Property<string>("Modelo")
+                    b.Property<string>("ImagenURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Placas")
+                    b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Year")
+                    b.Property<string>("Tipo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MarcaId");
-
-                    b.ToTable("Vehiculos");
+                    b.ToTable("Cervezas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -319,22 +327,6 @@ namespace VehiculosAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("VehiculosAPI.Entities.Vehiculo", b =>
-                {
-                    b.HasOne("VehiculosAPI.Entities.Catalogos.CatMarca", "Marca")
-                        .WithMany("Vehiculos")
-                        .HasForeignKey("MarcaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Marca");
-                });
-
-            modelBuilder.Entity("VehiculosAPI.Entities.Catalogos.CatMarca", b =>
-                {
-                    b.Navigation("Vehiculos");
                 });
 #pragma warning restore 612, 618
         }

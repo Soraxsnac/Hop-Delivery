@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace VehiculosMAUI
+﻿namespace VehiculosMAUI
 {
     public partial class App : Application
     {

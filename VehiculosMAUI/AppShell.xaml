@@ -3,35 +3,12 @@
     x:Class="VehiculosMAUI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:VehiculosMAUI.Views"
-    xmlns:local="clr-namespace:VehiculosMAUI">
+    xmlns:local="clr-namespace:VehiculosMAUI"
+    Shell.FlyoutBehavior="Disabled">
 
-    <FlyoutItem Title="Inicio" Route="MainPage">
-        <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Login" Route="LoginPage">
-        <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
-    </FlyoutItem>
-    
-    <FlyoutItem Title="Vehículos" Route="ListaVehiculosPage">
-        <ShellContent ContentTemplate="{DataTemplate views:ListaVehiculosPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Mantenimientos" Route="HistorialMantenimientosPage">
-        <ShellContent ContentTemplate="{DataTemplate views:HistorialMantenimientosPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Reportes de Fallas" Route="ReporteFallaPage">
-        <ShellContent ContentTemplate="{DataTemplate views:ReporteFallaPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Catálogos" Route="CatalogosPage">
-        <ShellContent ContentTemplate="{DataTemplate views:CatalogosPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Reportes" Route="ReportesPage">
-        <ShellContent ContentTemplate="{DataTemplate views:ReportesPage}" />
-    </FlyoutItem>
+    <ShellContent
+        Title="Catálogo de Cervezas"
+        Route="MainPage"
+        ContentTemplate="{DataTemplate local:MainPage}" />
 
 </Shell>

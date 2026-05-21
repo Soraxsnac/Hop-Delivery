@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public string Marca { get; set; }
 
-        public ICollection<Vehiculo> Vehiculos { get; set; }
+       
     }
 }

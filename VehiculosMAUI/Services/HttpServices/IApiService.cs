@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using VehiculosMAUI.DTOs;
 
-namespace VehiculosMAUI.Services.HttpServices
+namespace VehiculosMAUI.Services.HttpServices;
+
+public interface IApiService
 {
-    public interface IApiService
-    {
-            Task<T> GetAsync<T>(string endpoint);
-            Task<T> GetByIdAsync<T>(string endpoint, int id);
-            Task<T> PostAsync<T>(string endpoint, object data);
-            Task<T> PutAsync<T>(string endpoint, int id, object data);
-            Task<bool> DeleteAsync(string endpoint, int id);
-    }
+    Task<List<CervezaDTO>> ObtenerCervezasAsync();
+    Task<CervezaDTO> ObtenerCervezaPorIdAsync(int id);
+    Task<bool> CrearCervezaAsync(CervezaDTO dto);
+    Task<bool> ActualizarCervezaAsync(int id, CervezaDTO dto);
+    Task<bool> EliminarCervezaAsync(int id);
+    Task<T> PostAsync<T>(string endpoint, object data);
+
 }

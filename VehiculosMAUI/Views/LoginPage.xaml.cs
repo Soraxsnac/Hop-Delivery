@@ -29,4 +29,5 @@ public partial class LoginPage : ContentPage
             await SecureStorage.SetAsync("TokenApp", respuesta.token);
         }
     }
+   
 }

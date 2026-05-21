@@ -17,7 +17,7 @@ namespace VehiculosAPI.Data
 
 
         public DbSet<CatMarca> CatMarcas { get; set; }
-        public DbSet<Vehiculo> Vehiculos { get; set; }
+        public DbSet<Cerveza> Cervezas { get; set; }
 
     }
 }

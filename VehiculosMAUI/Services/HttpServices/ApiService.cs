@@ -1,90 +1,84 @@
-﻿using System.Text;
-using System.Text.Json;
-using VehiculosMAUI.Services.HttpServices;
+﻿using System.Net.Http.Json;
+using VehiculosMAUI.DTOs;
+
+namespace VehiculosMAUI.Services.HttpServices;
 
 public class ApiService : IApiService
 {
     private readonly HttpClient _httpClient;
-    private readonly JsonSerializerOptions _options;
+
+    
+    private readonly string _baseUrl = "http://localhost:5032/api/Cervezas";
 
     public ApiService(HttpClient httpClient)
     {
         _httpClient = httpClient;
+    }
 
-        _options = new JsonSerializerOptions
+    public async Task<List<CervezaDTO>> ObtenerCervezasAsync()
+    {
+        try
         {
-            PropertyNameCaseInsensitive = true
-        };
-    }
-
-    public async Task<T> GetAsync<T>(string endpoint)
-    {
-        await GetTokenAsync();
-        var response = await _httpClient.GetAsync(endpoint);
-
-        response.EnsureSuccessStatusCode();
-
-        var json = await response.Content.ReadAsStringAsync();
-
-        return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
+            var response = await _httpClient.GetAsync(_baseUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<CervezaDTO>>();
+            }
+        }
+        catch (Exception ex)
         {
-            PropertyNameCaseInsensitive = true
-        });
+            Console.WriteLine($"Error HTTP GET: {ex.Message}");
+        }
+        return new List<CervezaDTO>();
     }
 
-    public async Task<T> GetByIdAsync<T>(string endpoint, int id)
+    public async Task<CervezaDTO> ObtenerCervezaPorIdAsync(int id)
     {
-        await GetTokenAsync();
-        var response = await _httpClient.GetAsync($"{endpoint}/{id}");
-
-        if (!response.IsSuccessStatusCode)
-            return default;
-
-        var json = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(json, _options);
+        var response = await _httpClient.GetAsync($"{_baseUrl}/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<CervezaDTO>();
+        }
+        return null;
     }
 
-    public async Task<T> PostAsync<T>(string endpoint, object data)
+    public async Task<bool> CrearCervezaAsync(CervezaDTO dto)
     {
-        await GetTokenAsync();
-        var json = JsonSerializer.Serialize(data);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        var response = await _httpClient.PostAsync(endpoint, content);
-
-        if (!response.IsSuccessStatusCode)
-            return default;
-
-        var result = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(result, _options);
-    }
-
-    public async Task<T> PutAsync<T>(string endpoint, int id, object data)
-    {
-        await GetTokenAsync();
-        var json = JsonSerializer.Serialize(data);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        var response = await _httpClient.PutAsync($"{endpoint}/{id}", content);
-
-        if (!response.IsSuccessStatusCode)
-            return default;
-
-        var result = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<T>(result, _options);
-    }
-
-    public async Task<bool> DeleteAsync(string endpoint, int id)
-    {
-        await GetTokenAsync();
-        var response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
+        var response = await _httpClient.PostAsJsonAsync(_baseUrl, dto);
         return response.IsSuccessStatusCode;
     }
 
-   private async Task GetTokenAsync()
+    public async Task<bool> ActualizarCervezaAsync(int id, CervezaDTO dto)
     {
-        var token = await SecureStorage.GetAsync("TokenApp");
+        var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/{id}", dto);
+        return response.IsSuccessStatusCode;
+    }
 
-        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+    public async Task<bool> EliminarCervezaAsync(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"{_baseUrl}/{id}");
+        return response.IsSuccessStatusCode;
+    }
+
+  
+    public async Task<T> PostAsync<T>(string endpoint, object data)
+    {
+        try
+        {
+           
+            var authUrl = _baseUrl.Replace("Cervezas", endpoint);
+
+            var response = await _httpClient.PostAsJsonAsync(authUrl, data);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<T>();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error de Auth: {ex.Message}");
+        }
+        return default;
+      
     }
 }
