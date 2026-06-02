@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VehiculosAPI.DTOs;
 using VehiculosAPI.Services;
 
 namespace VehiculosAPI.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] // Apagado temporalmente para el CRUD
     [Route("api/[controller]")]
     [ApiController]
     public class CatalogosController : ControllerBase
@@ -17,6 +14,13 @@ namespace VehiculosAPI.Controllers
         public CatalogosController(ICatMarcaService catMarcaService)
         {
             this.catMarcaService = catMarcaService;
+        }
+
+        [HttpGet("marcas")]
+        public async Task<IActionResult> ObtenerMarcas()
+        {
+            var marcas = await catMarcaService.GetAsync();
+            return Ok(marcas);
         }
 
         [HttpPost("nuevamarca")]
@@ -33,11 +37,19 @@ namespace VehiculosAPI.Controllers
             }
         }
 
-        [HttpGet("marcas")]
-        public async Task<IActionResult> ObtenerMarcas()
+        
+        [HttpPut("marcas/{id}")]
+        public async Task<IActionResult> ActualizarMarca(int id, [FromBody] CrearCatMarcaDTO dto)
         {
-            var marcas = await catMarcaService.GetAsync();
-            return Ok(marcas);
+            await catMarcaService.UpdateAsync(id, dto);
+            return NoContent();
+        }
+
+        [HttpDelete("marcas/{id}")]
+        public async Task<IActionResult> EliminarMarca(int id)
+        {
+            await catMarcaService.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

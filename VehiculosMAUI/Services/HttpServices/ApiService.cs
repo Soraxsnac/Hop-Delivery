@@ -12,16 +12,19 @@ public class ApiService : IApiService
     {
         _httpClient = httpClient;
 
-        // Magia para detectar si estamos en Android o en Windows
+        // 1. Límite de 5 segundos. Si no encuentra el servidor rápido, falla y no congela la app.
+        _httpClient.Timeout = TimeSpan.FromSeconds(5);
+
+        // 2. Detección de plataforma
         if (DeviceInfo.Platform == DevicePlatform.Android)
         {
-            // IP especial de Android para conectarse al localhost de tu computadora
+            // El emulador Android SIEMPRE debe usar 10.0.2.2
             _baseUrl = "http://10.0.2.2:5032/api/Cervezas";
         }
         else
         {
-            // URL normal para cuando corres la app como programa de Windows
-            _baseUrl = "http://localhost:5032/api/Cervezas";
+            // Windows usa la IP configurada en el launchSettings.json de la API
+            _baseUrl = "http://127.0.0.1:5032/api/Cervezas";
         }
     }
 
@@ -61,9 +64,21 @@ public class ApiService : IApiService
         try
         {
             var response = await _httpClient.PostAsJsonAsync(_baseUrl, dto);
-            return response.IsSuccessStatusCode;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                // Extraemos el error de la API si la base de datos lo rechaza
+                string errorDetalle = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Estado: {response.StatusCode}\nDetalle de la API: {errorDetalle}");
+            }
+
+            return true;
         }
-        catch { return false; }
+        catch (Exception)
+        {
+            // Lanzamos el error hacia arriba para que la interfaz lo muestre en pantalla
+            throw;
+        }
     }
 
     public async Task<bool> ActualizarCervezaAsync(int id, CervezaDTO dto)
