@@ -1,5 +1,7 @@
-﻿using System.Net.Http.Json;
+﻿using System;
+using System.Net.Http.Json;
 using VehiculosMAUI.DTOs;
+using Microsoft.Maui.Devices;
 
 namespace VehiculosMAUI.Services.HttpServices;
 
@@ -12,7 +14,6 @@ public class ApiService : IApiService
     {
         _httpClient = httpClient;
 
-  .
         _httpClient.Timeout = TimeSpan.FromSeconds(5);
 
        
@@ -23,7 +24,7 @@ public class ApiService : IApiService
         }
         else
         {
-            // Windows usa la IP configurada en el launchSettings.json de la API
+           
             _baseUrl = "http://127.0.0.1:5032/api/Cervezas";
         }
     }
