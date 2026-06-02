@@ -1,40 +1,52 @@
-﻿using VehiculosAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using VehiculosAPI.Data;
 using VehiculosAPI.DTOs;
 using VehiculosAPI.Entities.Catalogos;
-using Microsoft.EntityFrameworkCore;
 
 namespace VehiculosAPI.Services
 {
     public class CatMarcaService : ICatMarcaService
     {
-        private readonly ApplicationDbContext dbContext;
+        private readonly ApplicationDbContext _context;
 
-        public CatMarcaService(ApplicationDbContext dbContext)
+        public CatMarcaService(ApplicationDbContext context)
         {
-            this.dbContext = dbContext;
-        }
-        public async Task<int> CreateAsync(CrearCatMarcaDTO crearCatMarcaDTO)
-        {
-            CatMarca nuevaMarca = new CatMarca
-            {
-                Marca = crearCatMarcaDTO.Marca
-            };
-
-            dbContext.CatMarcas.Add(nuevaMarca);
-            var result = await dbContext.SaveChangesAsync();
-            if (result > 0)
-            {
-                return nuevaMarca.Id;
-            }
-            else
-            {
-                throw new Exception("No se pudo crear la marca.");
-            }
+            _context = context;
         }
 
         public async Task<List<MarcaDTO>> GetAsync()
         {
-            return await dbContext.CatMarcas.Select(m => new MarcaDTO { Marca = m.Marca }).ToListAsync();
+            return await _context.CatMarcas
+                .Select(m => new MarcaDTO { Id = m.Id, Marca = m.Marca })
+                .ToListAsync();
+        }
+
+        public async Task<int> CreateAsync(CrearCatMarcaDTO dto)
+        {
+            var marca = new CatMarca { Marca = dto.Marca };
+            _context.CatMarcas.Add(marca);
+            await _context.SaveChangesAsync();
+            return marca.Id;
+        }
+
+        public async Task UpdateAsync(int id, CrearCatMarcaDTO dto)
+        {
+            var marca = await _context.CatMarcas.FindAsync(id);
+            if (marca != null)
+            {
+                marca.Marca = dto.Marca;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var marca = await _context.CatMarcas.FindAsync(id);
+            if (marca != null)
+            {
+                _context.CatMarcas.Remove(marca);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace VehiculosMAUI.DTOs
+﻿namespace VehiculosMAUI.DTOs
 {
     public class MarcaDTO
     {
+        public int Id { get; set; }
         public string Marca { get; set; }
     }
 }

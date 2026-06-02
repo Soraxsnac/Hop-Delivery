@@ -12,13 +12,13 @@ public class ApiService : IApiService
     {
         _httpClient = httpClient;
 
-        // 1. Límite de 5 segundos. Si no encuentra el servidor rápido, falla y no congela la app.
+  .
         _httpClient.Timeout = TimeSpan.FromSeconds(5);
 
-        // 2. Detección de plataforma
+       
         if (DeviceInfo.Platform == DevicePlatform.Android)
         {
-            // El emulador Android SIEMPRE debe usar 10.0.2.2
+            
             _baseUrl = "http://10.0.2.2:5032/api/Cervezas";
         }
         else
@@ -117,5 +117,51 @@ public class ApiService : IApiService
             Console.WriteLine($"Error de Auth: {ex.Message}");
         }
         return default;
+    }
+    // --- METODOS PARA EL CRUD DE MARCAS ---
+    public async Task<List<MarcaDTO>> ObtenerMarcasAsync()
+    {
+        try
+        {
+            string url = _baseUrl.Replace("Cervezas", "Catalogos/marcas");
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadFromJsonAsync<List<MarcaDTO>>();
+        }
+        catch { }
+        return new List<MarcaDTO>();
+    }
+
+    public async Task<bool> CrearMarcaAsync(CrearCatMarcaDTO dto)
+    {
+        try
+        {
+            string url = _baseUrl.Replace("Cervezas", "Catalogos/nuevamarca");
+            var response = await _httpClient.PostAsJsonAsync(url, dto);
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
+    public async Task<bool> ActualizarMarcaAsync(int id, CrearCatMarcaDTO dto)
+    {
+        try
+        {
+            string url = _baseUrl.Replace("Cervezas", $"Catalogos/marcas/{id}");
+            var response = await _httpClient.PutAsJsonAsync(url, dto);
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
+    public async Task<bool> EliminarMarcaAsync(int id)
+    {
+        try
+        {
+            string url = _baseUrl.Replace("Cervezas", $"Catalogos/marcas/{id}");
+            var response = await _httpClient.DeleteAsync(url);
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
     }
 }

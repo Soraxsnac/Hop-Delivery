@@ -1,11 +1,13 @@
 ﻿using VehiculosAPI.DTOs;
-using VehiculosAPI.Entities.Catalogos;
 
 namespace VehiculosAPI.Services
 {
     public interface ICatMarcaService
     {
-        Task<int> CreateAsync(CrearCatMarcaDTO crearCatMarcaDTO);
         Task<List<MarcaDTO>> GetAsync();
+        Task<int> CreateAsync(CrearCatMarcaDTO dto);
+
+        Task UpdateAsync(int id, CrearCatMarcaDTO dto);
+        Task DeleteAsync(int id);
     }
 }

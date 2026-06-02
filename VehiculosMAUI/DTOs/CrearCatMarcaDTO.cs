@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VehiculosMAUI.DTOs
 {
-    internal class CrearCatMarcaDTO
+    public class CrearCatMarcaDTO
     {
         public string Marca { get; set; }
     }
