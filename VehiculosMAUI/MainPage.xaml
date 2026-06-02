@@ -6,23 +6,34 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <Label Grid.Row="0" Text="Nuestras Cervezas" FontSize="26" FontAttributes="Bold" Margin="15" TextColor="#333333" />
+        <Label Grid.Row="0" Text="Nuestras Cervezas" FontSize="28" FontAttributes="Bold" Margin="20,15,20,5" TextColor="#333333" />
 
-        <CollectionView Grid.Row="1" x:Name="CervezasCollection" Margin="10,0">
+        <CollectionView Grid.Row="1" x:Name="CervezasCollection" Margin="10,0"
+                        SelectionMode="Single"
+                        SelectionChanged="OnCervezaSeleccionada">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,0,0,15" Padding="0" CornerRadius="12" HasShadow="True" BorderColor="Transparent">
-                        <Grid ColumnDefinitions="120,*">
-                            <Image Grid.Column="0" Source="{Binding ImagenURL}" HeightRequest="120" Aspect="AspectFill" />
-                            <StackLayout Grid.Column="1" Margin="15,10">
-                                <Label Text="{Binding Nombre}" FontSize="20" FontAttributes="Bold" TextColor="#1A1A1A" />
-                                <Label Text="{Binding Tipo}" FontSize="16" TextColor="#D35400" FontAttributes="Italic" Margin="0,0,0,5" />
-                                <Grid ColumnDefinitions="Auto,Auto">
-                                    <Label Grid.Column="0" Text="{Binding ABV, StringFormat='ABV: {0}%'}" FontSize="14" TextColor="Gray" Margin="0,0,15,0" />
-                                    <Label Grid.Column="1" Text="{Binding IBU, StringFormat='IBU: {0}'}" FontSize="14" TextColor="Gray" />
+                    <Frame Margin="10,10,10,15" Padding="0" CornerRadius="20" HasShadow="True" BorderColor="Transparent" BackgroundColor="White">
+                        <StackLayout>
+                            <Image Source="{Binding ImagenURL}" HeightRequest="200" Aspect="AspectFill" />
+
+                            <StackLayout Padding="20,15">
+                                <Label Text="{Binding Nombre}" FontSize="22" FontAttributes="Bold" TextColor="#1A1A1A" />
+                                <Label Text="{Binding Tipo}" FontSize="16" TextColor="#D35400" FontAttributes="Italic" Margin="0,0,0,12" />
+
+                                <Grid ColumnDefinitions="*,*">
+                                    <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                        <Label Text="🍻 " FontSize="16" />
+                                        <Label Text="{Binding ABV, StringFormat='ABV: {0}%'}" FontSize="15" TextColor="#555555" FontAttributes="Bold" VerticalOptions="Center"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End">
+                                        <Label Text="🌿 " FontSize="16" />
+                                        <Label Text="{Binding IBU, StringFormat='IBU: {0}'}" FontSize="15" TextColor="#555555" FontAttributes="Bold" VerticalOptions="Center"/>
+                                    </StackLayout>
                                 </Grid>
                             </StackLayout>
-                        </Grid>
+                        </StackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -34,8 +45,9 @@
                 FontAttributes="Bold"
                 BackgroundColor="#2C3E50" 
                 TextColor="White" 
-                Margin="15" 
-                CornerRadius="10"
+                Margin="20,10,20,20" 
+                CornerRadius="15"
+                HeightRequest="55"
                 Clicked="OnAgregarClicked" />
     </Grid>
 </ContentPage>

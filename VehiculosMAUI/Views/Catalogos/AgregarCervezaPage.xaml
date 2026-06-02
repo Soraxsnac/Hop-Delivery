@@ -6,23 +6,24 @@
 
     <ScrollView>
         <StackLayout Margin="20" Spacing="15">
-            <Label Text="Nombre:" FontAttributes="Bold" />
-            <Entry x:Name="NombreEntry" Placeholder="Ej. Stout Imperial" />
 
-            <Label Text="Tipo:" FontAttributes="Bold" />
-            <Entry x:Name="TipoEntry" Placeholder="Ej. Oscura" />
+            <Label Text="Nombre:" FontAttributes="Bold" TextColor="#333333" />
+            <Entry x:Name="NombreEntry" Placeholder="Ej. Stout Imperial" TextColor="#1A1A1A" PlaceholderColor="Gray" BackgroundColor="White" />
 
-            <Label Text="ABV (% de Alcohol):" FontAttributes="Bold" />
-            <Entry x:Name="ABVEntry" Placeholder="Ej. 8.5" Keyboard="Numeric" />
+            <Label Text="Tipo:" FontAttributes="Bold" TextColor="#333333" />
+            <Entry x:Name="TipoEntry" Placeholder="Ej. Oscura" TextColor="#1A1A1A" PlaceholderColor="Gray" BackgroundColor="White" />
 
-            <Label Text="IBU (Amargor):" FontAttributes="Bold" />
-            <Entry x:Name="IBUEntry" Placeholder="Ej. 40" Keyboard="Numeric" />
+            <Label Text="ABV (% de Alcohol):" FontAttributes="Bold" TextColor="#333333" />
+            <Entry x:Name="ABVEntry" Placeholder="Ej. 8.5" Keyboard="Numeric" TextColor="#1A1A1A" PlaceholderColor="Gray" BackgroundColor="White" />
 
-            <Label Text="Descripción:" FontAttributes="Bold" />
-            <Editor x:Name="DescripcionEditor" Placeholder="Notas de sabor..." HeightRequest="80" />
+            <Label Text="IBU (Amargor):" FontAttributes="Bold" TextColor="#333333" />
+            <Entry x:Name="IBUEntry" Placeholder="Ej. 40" Keyboard="Numeric" TextColor="#1A1A1A" PlaceholderColor="Gray" BackgroundColor="White" />
 
-            <Label Text="URL de la Imagen:" FontAttributes="Bold" />
-            <Entry x:Name="ImagenEntry" Placeholder="https://..." />
+            <Label Text="Descripción:" FontAttributes="Bold" TextColor="#333333" />
+            <Editor x:Name="DescripcionEditor" Placeholder="Notas de sabor..." HeightRequest="80" TextColor="#1A1A1A" PlaceholderColor="Gray" BackgroundColor="White" />
+
+            <Label Text="URL de la Imagen:" FontAttributes="Bold" TextColor="#333333" />
+            <Entry x:Name="ImagenEntry" Placeholder="https://..." TextColor="#1A1A1A" PlaceholderColor="Gray" BackgroundColor="White" />
 
             <Button Text="Guardar Cerveza" 
                     BackgroundColor="#27AE60" 
