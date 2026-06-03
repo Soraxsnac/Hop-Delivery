@@ -10,25 +10,21 @@
 
             <Entry x:Name="TxtNombre" Placeholder="Nombre de la cerveza" />
 
-            <Entry x:Name="TxtTipo" Placeholder="Tipo (Ej. IPA, Stout, Porter)" />
+            <Label Text="Tipo de Cerveza:" FontAttributes="Bold" />
+            <Picker x:Name="PickerTipo" Title="Selecciona un tipo" />
 
-            <Entry x:Name="TxtIdMarca" Placeholder="ID de la Marca (Ej. 1)" Keyboard="Numeric" />
+            <Label Text="Marca:" FontAttributes="Bold" />
+            <Picker x:Name="PickerMarca" Title="Selecciona la marca" SelectedIndexChanged="OnMarcaSeleccionada" />
 
             <Entry x:Name="TxtABV" Placeholder="ABV % de Alcohol (Ej. 6.5)" Keyboard="Numeric" />
-
             <Entry x:Name="TxtIBU" Placeholder="Nivel de Amargor IBU (Ej. 40)" Keyboard="Numeric" />
-
             <Entry x:Name="TxtDescripcion" Placeholder="Descripción corta" />
 
-            <Label Text="¿Cuántas estrellas le das?" FontSize="16" FontAttributes="Bold" Margin="0,10,0,0" />
-            <Picker x:Name="PickerCalificacion" Title="Selecciona de 0 a 5 estrellas">
-                <x:String>0 Estrellas (Pésima)</x:String>
-                <x:String>1 Estrella</x:String>
-                <x:String>2 Estrellas</x:String>
-                <x:String>3 Estrellas (Regular)</x:String>
-                <x:String>4 Estrellas</x:String>
-                <x:String>5 Estrellas (Excelente)</x:String>
-            </Picker>
+            
+            <Entry x:Name="TxtImagenUrl" IsVisible="False" />
+
+            <Label Text="¿Cuántas estrellas le das?" FontAttributes="Bold" />
+            <Picker x:Name="PickerCalificacion" Title="Selecciona de 0 a 5 estrellas" />
 
             <Button Text="Guardar Cerveza" Clicked="OnGuardarClicked" BackgroundColor="#512BD4" TextColor="White" Margin="0,20,0,0" />
         </VerticalStackLayout>
