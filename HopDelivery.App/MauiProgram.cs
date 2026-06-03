@@ -10,7 +10,8 @@ namespace HopDelivery.App
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<HopDelivery.UI.App>()
+                // CORRECCIÓN: Se quitó "HopDelivery.UI.App" para usar directamente "App"
+                .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -21,7 +22,7 @@ namespace HopDelivery.App
             builder.Logging.AddDebug();
 #endif
 
-            // Registro correcto del HttpClient administrado para evitar caídas en cascada
+            
             builder.Services.AddHttpClient<IApiService, ApiService>(client =>
             {
                 client.BaseAddress = new Uri("http://127.0.0.1:5032/");

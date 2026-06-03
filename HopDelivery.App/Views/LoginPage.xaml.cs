@@ -5,13 +5,16 @@ namespace HopDelivery.Views
 {
     public partial class LoginPage : ContentPage
     {
-        public LoginPage() => InitializeComponent();
+        public LoginPage()
+        {
+            InitializeComponent();
+        }
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
+            // TxtUser y TxtPass ahora serán reconocidos correctamente
             if (TxtUser.Text == "admin" && TxtPass.Text == "1234")
             {
-                // Inyectamos el servicio y navegamos a la pantalla principal
                 var apiService = IPlatformApplication.Current.Services.GetService<IApiService>();
                 Application.Current.MainPage = new NavigationPage(new HopDelivery.App.MainPage(apiService));
             }
