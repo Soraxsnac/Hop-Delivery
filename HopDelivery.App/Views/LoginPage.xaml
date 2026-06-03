@@ -2,11 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HopDelivery.Views.LoginPage"
-             Title="Login">
+             Title="Iniciar Sesión">
+
     <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-        <Label Text="Hop Delivery - Admin" FontSize="24" HorizontalOptions="Center" />
-        <Entry x:Name="TxtUser" Placeholder="Usuario" />
+        <Label Text="Hop Delivery" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#512BD4" />
+        <Label Text="Tus cervezas favoritas" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,20" />
+
+        <Entry x:Name="TxtUser" Placeholder="Correo electrónico" Keyboard="Email" />
         <Entry x:Name="TxtPass" Placeholder="Contraseña" IsPassword="True" />
-        <Button Text="Entrar" Clicked="OnLoginClicked" BackgroundColor="#512BD4" TextColor="White" />
+
+        <Button Text="Entrar" Clicked="OnLoginClicked" BackgroundColor="#512BD4" TextColor="White" HeightRequest="50" CornerRadius="8" />
+
+        <Label Text="¿No tienes cuenta?" HorizontalOptions="Center" Margin="0,20,0,0" />
+        <Button Text="Crear cuenta nueva" Clicked="OnIrARegistroClicked" BackgroundColor="Transparent" TextColor="#512BD4" FontAttributes="Bold" />
     </VerticalStackLayout>
+
 </ContentPage>

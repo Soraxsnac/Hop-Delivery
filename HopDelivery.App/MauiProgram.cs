@@ -10,7 +10,7 @@ namespace HopDelivery.App
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                // CORRECCIÓN: Se quitó "HopDelivery.UI.App" para usar directamente "App"
+              
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
@@ -30,6 +30,7 @@ namespace HopDelivery.App
             });
 
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<Views.LoginPage>();
 
             return builder.Build();
         }
