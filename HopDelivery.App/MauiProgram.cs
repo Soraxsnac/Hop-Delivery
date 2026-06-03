@@ -1,5 +1,5 @@
-﻿using HopDelivery.App.Services.HttpServices;
-using HopDelivery.Services.HttpServices;
+﻿using HopDelivery.Services.HttpServices;
+using HopDelivery.App.Services.HttpServices;
 using Microsoft.Extensions.Logging;
 
 namespace HopDelivery.App
@@ -10,8 +10,7 @@ namespace HopDelivery.App
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                // Usamos global:: para asegurarle a C# que queremos la CLASE App, no el namespace
-                .UseMauiApp<global::HopDelivery.App>()
+                .UseMauiApp<HopDelivery.UI.App>()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,12 +21,13 @@ namespace HopDelivery.App
             builder.Logging.AddDebug();
 #endif
 
-            builder.Services.AddSingleton(sp => new HttpClient
+            // Registro correcto del HttpClient administrado para evitar caídas en cascada
+            builder.Services.AddHttpClient<IApiService, ApiService>(client =>
             {
-                BaseAddress = new Uri("http://127.0.0.1:5032/")
+                client.BaseAddress = new Uri("http://127.0.0.1:5032/");
+                client.Timeout = TimeSpan.FromSeconds(10);
             });
 
-            builder.Services.AddSingleton<IApiService, ApiService>();
             builder.Services.AddTransient<MainPage>();
 
             return builder.Build();

@@ -1,6 +1,6 @@
-﻿using HopDelivery.App;
-using Microsoft.Maui;
+﻿using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
+
 
 namespace HopDelivery.WinUI
 {
@@ -11,6 +11,7 @@ namespace HopDelivery.WinUI
             this.InitializeComponent();
         }
 
-        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+        
+        protected override MauiApp CreateMauiApp() => global::HopDelivery.App.MauiProgram.CreateMauiApp();
     }
-}   
+}

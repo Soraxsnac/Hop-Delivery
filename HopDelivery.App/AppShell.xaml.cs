@@ -1,8 +1,6 @@
-﻿using HopDelivery.Views;
-using HopDelivery.Views.Catalogos;
-using Microsoft.Maui.Controls;
-using System;
+﻿using Microsoft.Maui.Controls;
 
+// Lo regresamos a su namespace original para que tu App.xaml.cs lo pueda arrancar
 namespace HopDelivery
 {
     public partial class AppShell : Shell
@@ -10,11 +8,6 @@ namespace HopDelivery
         public AppShell()
         {
             InitializeComponent();
-
-          
-            Routing.RegisterRoute(nameof(AgregarCervezaPage), typeof(AgregarCervezaPage));
-            Routing.RegisterRoute(nameof(CatMarcaPage), typeof(CatMarcaPage));
-            Routing.RegisterRoute(nameof(CatalogosPage), typeof(CatalogosPage));
         }
     }
 }

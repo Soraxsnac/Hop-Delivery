@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using HopDelivery.Services.HttpServices;
+using HopDelivery.Views.Catalogos; // <--- Línea crucial para enlazar las vistas
 
-namespace HopDelivery
+namespace HopDelivery.App
 {
     public partial class MainPage : ContentPage
     {
@@ -14,27 +16,57 @@ namespace HopDelivery
             _apiService = apiService;
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await CargarCervezas();
+        }
+
         private async void OnRefrescarClicked(object sender, EventArgs e)
         {
-            var boton = (Button)sender;
-            boton.Text = "Conectando...";
-            boton.IsEnabled = false;
+            BtnRefrescar.Text = "Cargando...";
+            BtnRefrescar.IsEnabled = false;
 
+            await CargarCervezas();
+
+            BtnRefrescar.Text = "Refrescar Catálogo";
+            BtnRefrescar.IsEnabled = true;
+        }
+
+        private async Task CargarCervezas()
+        {
             try
             {
-                // Llamamos a tu método real con DTOs
                 var cervezas = await _apiService.ObtenerCervezasAsync();
 
-                await DisplayAlert("¡Conexión Exitosa!", $"Los datos llegaron desde la API. Se encontraron {cervezas.Count} cervezas.", "Excelente");
+                if (cervezas == null || cervezas.Count == 0)
+                {
+                    await DisplayAlert("Aviso", "No hay cervezas registradas en la base de datos.", "OK");
+                }
+
+                ListaCervezas.ItemsSource = cervezas;
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error Oculto", $"Esto es lo que falló:\n\n{ex.Message}", "OK");
+                await DisplayAlert("Error", $"No se pudo conectar a la API: {ex.Message}", "OK");
             }
-            finally
+        }
+
+        private async void OnAgregarClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AgregarCervezaPage());
+        }
+
+        private async void OnEditarClicked(object sender, EventArgs e)
+        {
+            var boton = sender as Button;
+
+            // Mandamos la cerveza completa a la pantalla de edición
+            var cervezaSeleccionada = boton.CommandParameter as HopDelivery.DTOs.CervezaDTO;
+
+            if (cervezaSeleccionada != null)
             {
-                boton.Text = "Refrescar Catálogo";
-                boton.IsEnabled = true;
+                await Navigation.PushAsync(new EditarCervezaPage(cervezaSeleccionada));
             }
         }
     }
