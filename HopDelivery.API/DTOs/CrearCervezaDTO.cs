@@ -1,17 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HopDelivery.API.DTOs;
-
-public class CrearCervezaDTO
+﻿namespace HopDelivery.API.DTOs
 {
-    [Required(ErrorMessage = "El nombre es obligatorio")]
-    public string Nombre { get; set; }
-
-    [Required]
-    public string Tipo { get; set; }
-
-    public int IBU { get; set; }
-    public double ABV { get; set; }
-    public string Descripcion { get; set; }
-    public string ImagenURL { get; set; }
+    public class CrearCervezaDTO
+    {
+        public string Nombre { get; set; }
+        public string Tipo { get; set; }
+        public double ABV { get; set; }
+        public int IBU { get; set; }
+        public string Descripcion { get; set; } 
+        public string ImagenURL { get; set; }
+        public int IdMarca { get; set; }
+        public int Calificacion { get; set; }
+    }
 }

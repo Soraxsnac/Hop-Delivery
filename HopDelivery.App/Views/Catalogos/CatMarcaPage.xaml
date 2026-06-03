@@ -1,0 +1,32 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDelivery.Views.Catalogos.CatMarcaPage"
+             Title="Marcas Disponibles"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Label Grid.Row="0" Text="Catálogo de Marcas" FontSize="28" FontAttributes="Bold" Margin="20,15" TextColor="#333333" />
+
+        <CollectionView Grid.Row="1" x:Name="MarcasCollection" Margin="15,0"
+                        SelectionMode="Single"
+                        SelectionChanged="OnMarcaSeleccionada">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,0,0,10" Padding="15" CornerRadius="12" HasShadow="True" BorderColor="Transparent" BackgroundColor="White">
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                            <Label Text="🏷️" FontSize="20" Margin="0,0,15,0"/>
+                            <Label Text="{Binding Marca}" FontSize="20" FontAttributes="Bold" TextColor="#1A1A1A" VerticalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="2" 
+                Text="+ Agregar Nueva Marca" 
+                FontSize="18" FontAttributes="Bold"
+                BackgroundColor="#2980B9" TextColor="White" 
+                Margin="20" CornerRadius="15" HeightRequest="55"
+                Clicked="OnAgregarClicked" />
+    </Grid>
+</ContentPage>

@@ -1,4 +1,4 @@
-﻿namespace HopDelivery.API.DTOs
+﻿namespace HopDelivery.DTOs
 {
     public class MarcaDTO
     {

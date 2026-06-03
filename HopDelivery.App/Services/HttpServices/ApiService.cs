@@ -1,0 +1,166 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using HopDelivery.DTOs;
+using Microsoft.Maui.Devices;
+using HopDelivery.Services.HttpServices;
+
+
+namespace HopDelivery.App.Services.HttpServices
+{
+    public class ApiService : IApiService
+    {
+        private readonly HttpClient _httpClient;
+        private readonly string _baseUrl;
+
+        public ApiService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+            _httpClient.Timeout = TimeSpan.FromSeconds(5);
+
+            if (DeviceInfo.Platform == DevicePlatform.Android)
+            {
+                _baseUrl = "http://10.0.2.2:5032/api/Cervezas";
+            }
+            else
+            {
+                _baseUrl = "http://127.0.0.1:5032/api/Cervezas";
+            }
+        }
+
+        public async Task<List<CervezaDTO>> ObtenerCervezasAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(_baseUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<List<CervezaDTO>>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error HTTP GET: {ex.Message}");
+            }
+            return new List<CervezaDTO>();
+        }
+
+        public async Task<CervezaDTO> ObtenerCervezaPorIdAsync(int id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{_baseUrl}/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<CervezaDTO>();
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        public async Task<bool> CrearCervezaAsync(CervezaDTO dto)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(_baseUrl, dto);
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorDetalle = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Estado: {response.StatusCode}\nDetalle de la API: {errorDetalle}");
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> ActualizarCervezaAsync(int id, CervezaDTO dto)
+        {
+            try
+            {
+                var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/{id}", dto);
+                return response.IsSuccessStatusCode;
+            }
+            catch { return false; }
+        }
+
+        public async Task<bool> EliminarCervezaAsync(int id)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"{_baseUrl}/{id}");
+                return response.IsSuccessStatusCode;
+            }
+            catch { return false; }
+        }
+
+        public async Task<T> PostAsync<T>(string endpoint, object data)
+        {
+            try
+            {
+                var authUrl = _baseUrl.Replace("Cervezas", endpoint);
+                var response = await _httpClient.PostAsJsonAsync(authUrl, data);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<T>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error de Auth: {ex.Message}");
+            }
+            return default;
+        }
+
+        // --- METODOS PARA EL CRUD DE MARCAS ---
+        public async Task<List<MarcaDTO>> ObtenerMarcasAsync()
+        {
+            try
+            {
+                string url = _baseUrl.Replace("Cervezas", "Catalogos/marcas");
+                var response = await _httpClient.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                    return await response.Content.ReadFromJsonAsync<List<MarcaDTO>>();
+            }
+            catch { }
+            return new List<MarcaDTO>();
+        }
+
+        public async Task<bool> CrearMarcaAsync(CrearCatMarcaDTO dto)
+        {
+            try
+            {
+                string url = _baseUrl.Replace("Cervezas", "Catalogos/nuevamarca");
+                var response = await _httpClient.PostAsJsonAsync(url, dto);
+                return response.IsSuccessStatusCode;
+            }
+            catch { return false; }
+        }
+
+        public async Task<bool> ActualizarMarcaAsync(int id, CrearCatMarcaDTO dto)
+        {
+            try
+            {
+                string url = _baseUrl.Replace("Cervezas", $"Catalogos/marcas/{id}");
+                var response = await _httpClient.PutAsJsonAsync(url, dto);
+                return response.IsSuccessStatusCode;
+            }
+            catch { return false; }
+        }
+
+        public async Task<bool> EliminarMarcaAsync(int id)
+        {
+            try
+            {
+                string url = _baseUrl.Replace("Cervezas", $"Catalogos/marcas/{id}");
+                var response = await _httpClient.DeleteAsync(url);
+                return response.IsSuccessStatusCode;
+            }
+            catch { return false; }
+        }
+    }
+}

@@ -2,6 +2,9 @@
 using HopDelivery.API.Data;
 using HopDelivery.API.DTOs;
 using HopDelivery.API.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HopDelivery.API.Services
 {
@@ -25,7 +28,9 @@ namespace HopDelivery.API.Services
                     IBU = c.IBU,
                     ABV = c.ABV,
                     Descripcion = c.Descripcion,
-                    ImagenURL = c.ImagenURL
+                    ImagenURL = c.ImagenURL,
+                    IdMarca = c.IdMarca,
+                    Calificacion = c.Calificacion
                 }).ToListAsync();
         }
 
@@ -42,7 +47,9 @@ namespace HopDelivery.API.Services
                 IBU = c.IBU,
                 ABV = c.ABV,
                 Descripcion = c.Descripcion,
-                ImagenURL = c.ImagenURL
+                ImagenURL = c.ImagenURL,
+                IdMarca = c.IdMarca,
+                Calificacion = c.Calificacion
             };
         }
 
@@ -55,7 +62,9 @@ namespace HopDelivery.API.Services
                 IBU = dto.IBU,
                 ABV = dto.ABV,
                 Descripcion = dto.Descripcion,
-                ImagenURL = dto.ImagenURL
+                ImagenURL = dto.ImagenURL,
+                IdMarca = dto.IdMarca,
+                Calificacion = dto.Calificacion
             };
 
             _context.Cervezas.Add(cerveza);
@@ -75,6 +84,8 @@ namespace HopDelivery.API.Services
                 cerveza.ABV = dto.ABV;
                 cerveza.Descripcion = dto.Descripcion;
                 cerveza.ImagenURL = dto.ImagenURL;
+                cerveza.IdMarca = dto.IdMarca;
+                cerveza.Calificacion = dto.Calificacion;
                 await _context.SaveChangesAsync();
             }
         }

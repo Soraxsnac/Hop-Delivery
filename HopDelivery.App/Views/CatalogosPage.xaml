@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDelivery.Views.CatalogosPage"
+             Title="CatalogosPage">
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <Button Text="Marcas" Clicked="Button_Clicked"/>
+        <Button Text="Tipos de Vehículo" />
+        <Button Text="Tipos de Servicio" />
+        <Button Text="Estados del Vehículo" />
+
+    </VerticalStackLayout>
+</ContentPage>

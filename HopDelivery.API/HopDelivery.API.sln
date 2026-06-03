@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11822.322 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopDelivery.API", "HopDelivery.API.csproj", "{0C4B4145-C139-C40C-1441-C21C113724EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopDelivery.App", "..\HopDelivery.App\HopDelivery.App.csproj", "{8E9EB812-7499-769A-007B-09FA7F45F7AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C4B4145-C139-C40C-1441-C21C113724EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4B4145-C139-C40C-1441-C21C113724EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4B4145-C139-C40C-1441-C21C113724EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C4B4145-C139-C40C-1441-C21C113724EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9EB812-7499-769A-007B-09FA7F45F7AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9EB812-7499-769A-007B-09FA7F45F7AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9EB812-7499-769A-007B-09FA7F45F7AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9EB812-7499-769A-007B-09FA7F45F7AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7AD46BA-A4C7-410D-BBE7-4126A3C3E638}
+	EndGlobalSection
+EndGlobal

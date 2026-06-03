@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="HopDelivery.API\HopDelivery.API.csproj" >
+ <Project Path="HopDelivery.App\HopDelivery.App.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

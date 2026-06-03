@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HopDelivery.Views.Catalogos.AgregarCervezaPage"
+             Title="Agregar Cerveza">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="Nueva Cerveza" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+
+        <Entry x:Name="NombreEntry" Placeholder="Nombre de la cerveza" />
+
+        <Entry x:Name="MarcaEntry" Placeholder="Marca de la cerveza" />
+
+        <Entry x:Name="ABVEntry" Placeholder="ABV (Ej. 6.5)" Keyboard="Numeric" />
+
+        <Entry x:Name="CalificacionEntry" Placeholder="Calificación (0 a 5 estrellas)" Keyboard="Numeric" />
+
+        <Entry x:Name="DescripcionEntry" Placeholder="Descripción corta" />
+
+        <Button Text="Guardar Cerveza" Clicked="OnGuardarClicked" BackgroundColor="#512BD4" TextColor="White" />
+    </VerticalStackLayout>
+
+</ContentPage>

@@ -1,6 +1,6 @@
-﻿namespace HopDelivery.API.Entities
+﻿namespace HopDelivery.DTOs
 {
-    public class Cerveza
+    public class CervezaDTO
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
