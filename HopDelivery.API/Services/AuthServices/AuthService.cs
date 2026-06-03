@@ -19,44 +19,44 @@ namespace HopDelivery.API.Services.AuthServices
             this.signInManager = signInManager;
             this.configuration = configuration;
         }
-        public async Task<bool> CreateUser(NewUserDTO newUser)
+
+        public async Task<TokenDTO> CreateUser(NewUserDTO newUser)
         {
             var newIdentityUser = new IdentityUser
             {
-                UserName = newUser.userName,
-                Email = newUser.email
+                UserName = newUser.Email,
+                Email = newUser.Email
             };
-            var result = await userManager.CreateAsync(newIdentityUser, newUser.password);
+
+            var result = await userManager.CreateAsync(newIdentityUser, newUser.Password);
+
             if (result.Succeeded)
             {
-                return true;
+                return BuildToken(newUser.Email);
             }
-            return false;
+
+            return new TokenDTO();
         }
 
         public async Task<TokenDTO> Login(UserDTO userDTO)
         {
             var result = await signInManager.PasswordSignInAsync
-                (userDTO.UserName, userDTO.Password, false, false);
+                (userDTO.Email, userDTO.Password, false, false);
 
             if (result.Succeeded)
             {
-                return BuildToken(userDTO.UserName);
+                return BuildToken(userDTO.Email);
             }
-            return new TokenDTO();
-        }   
 
-        private TokenDTO BuildToken(string userName)
+            return new TokenDTO();
+        }
+
+        private TokenDTO BuildToken(string email)
         {
             var claims = new List<Claim>()
             {
-            // ¡OJO! No enviar datos sensibles, solamente son de prueba
-             new Claim("User", userName),
-             new Claim("ColorFavorito", "Azul"),
-             new Claim("Validado", "true"),
-             new Claim("NumeroTarjeta", "123456"),
-             new Claim("ExpiracionTarjeta", "12/25"),
-             new Claim("CVVTarjeta", "123")
+                new Claim("User", email),
+                new Claim("Validado", "true")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["jwtkey"]!));

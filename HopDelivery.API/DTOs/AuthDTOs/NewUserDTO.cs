@@ -1,9 +1,13 @@
-﻿namespace HopDelivery.API.DTOs.AuthDTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HopDelivery.API.DTOs.AuthDTOs
 {
     public class NewUserDTO
     {
-        public string email { get; set; } = string.Empty;
-        public string password { get; set; } = string.Empty;
-        public string userName { get; set; } = string.Empty;
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string Password { get; set; }
     }
 }

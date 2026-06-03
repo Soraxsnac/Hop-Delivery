@@ -1,13 +1,15 @@
-﻿namespace HopDelivery.App
+﻿using Microsoft.Maui.Controls;
+
+namespace HopDelivery.App 
 {
     public partial class App : Application
     {
-        public App()
+        public App(Views.LoginPage loginPage)
         {
             InitializeComponent();
 
-          
-            MainPage = new NavigationPage(new Views.LoginPage());
+            
+            MainPage = new NavigationPage(loginPage);
         }
     }
 }

@@ -18,19 +18,25 @@ namespace HopDelivery.API.Controllers.AuthControllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] NewUserDTO newUser)
         {
-            var result = await authService.CreateUser(newUser);
-            if (result)
+            var tokenResult = await authService.CreateUser(newUser);
+
+            if (tokenResult != null && !string.IsNullOrEmpty(tokenResult.Token))
             {
-                return Ok();
+                return Ok(tokenResult);
             }
-            return BadRequest();
+            return BadRequest(new { message = "No se pudo crear el usuario. Verifica la contraseña o si el correo ya existe." });
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserDTO userDTO)
         {
-            var result = await authService.Login(userDTO);
-            return Ok(result);
+            var tokenResult = await authService.Login(userDTO);
+
+            if (tokenResult != null && !string.IsNullOrEmpty(tokenResult.Token))
+            {
+                return Ok(tokenResult);
+            }
+            return Unauthorized(new { message = "Credenciales incorrectas." });
         }
     }
 }

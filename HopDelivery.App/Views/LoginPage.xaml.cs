@@ -17,10 +17,6 @@ namespace HopDelivery.Views
             _apiService = apiService;
         }
 
-        public LoginPage()
-        {
-            InitializeComponent();
-        }
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
