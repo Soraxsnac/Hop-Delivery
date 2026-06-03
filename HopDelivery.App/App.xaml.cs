@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace HopDelivery.UI
+﻿namespace HopDelivery
 {
     public partial class App : Application
     {
@@ -8,8 +6,8 @@ namespace HopDelivery.UI
         {
             InitializeComponent();
 
-           
-            MainPage = new HopDelivery.AppShell();
+            // Aquí configuramos el Login como página de inicio
+            MainPage = new NavigationPage(new HopDelivery.Views.LoginPage());
         }
     }
 }

@@ -1,23 +1,24 @@
-using System;
 using Microsoft.Maui.Controls;
-using HopDelivery.DTOs;
 using HopDelivery.Services.HttpServices;
 
 namespace HopDelivery.Views
 {
     public partial class LoginPage : ContentPage
     {
-        private readonly IApiService _apiService;
+        public LoginPage() => InitializeComponent();
 
-        public LoginPage(IApiService apiService)
+        private async void OnLoginClicked(object sender, EventArgs e)
         {
-            InitializeComponent();
-            _apiService = apiService;
-        }
-
-        private async void Button_Clicked(object sender, EventArgs e)
-        {
-            // Tu lógica de inicio de sesión se queda aquí adentro
+            if (TxtUser.Text == "admin" && TxtPass.Text == "1234")
+            {
+                // Inyectamos el servicio y navegamos a la pantalla principal
+                var apiService = IPlatformApplication.Current.Services.GetService<IApiService>();
+                Application.Current.MainPage = new NavigationPage(new HopDelivery.App.MainPage(apiService));
+            }
+            else
+            {
+                await DisplayAlert("Error", "Usuario o contraseña incorrectos", "OK");
+            }
         }
     }
 }

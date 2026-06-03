@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 using HopDelivery.Services.HttpServices;
-using HopDelivery.Views.Catalogos; // <--- Línea crucial para enlazar las vistas
+using HopDelivery.Views.Catalogos;
 
 namespace HopDelivery.App
 {
@@ -22,52 +20,19 @@ namespace HopDelivery.App
             await CargarCervezas();
         }
 
-        private async void OnRefrescarClicked(object sender, EventArgs e)
-        {
-            BtnRefrescar.Text = "Cargando...";
-            BtnRefrescar.IsEnabled = false;
-
-            await CargarCervezas();
-
-            BtnRefrescar.Text = "Refrescar Catálogo";
-            BtnRefrescar.IsEnabled = true;
-        }
-
         private async Task CargarCervezas()
         {
-            try
-            {
-                var cervezas = await _apiService.ObtenerCervezasAsync();
-
-                if (cervezas == null || cervezas.Count == 0)
-                {
-                    await DisplayAlert("Aviso", "No hay cervezas registradas en la base de datos.", "OK");
-                }
-
-                ListaCervezas.ItemsSource = cervezas;
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", $"No se pudo conectar a la API: {ex.Message}", "OK");
-            }
+            try { ListaCervezas.ItemsSource = await _apiService.ObtenerCervezasAsync(); }
+            catch (Exception ex) { await DisplayAlert("Error", ex.Message, "OK"); }
         }
 
-        private async void OnAgregarClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AgregarCervezaPage());
-        }
+        private async void OnAgregarClicked(object sender, EventArgs e) => await Navigation.PushAsync(new AgregarCervezaPage());
 
         private async void OnEditarClicked(object sender, EventArgs e)
         {
-            var boton = sender as Button;
-
-            // Mandamos la cerveza completa a la pantalla de edición
-            var cervezaSeleccionada = boton.CommandParameter as HopDelivery.DTOs.CervezaDTO;
-
-            if (cervezaSeleccionada != null)
-            {
-                await Navigation.PushAsync(new EditarCervezaPage(cervezaSeleccionada));
-            }
+            var btn = sender as Button;
+            var cerveza = btn.CommandParameter as HopDelivery.DTOs.CervezaDTO;
+            if (cerveza != null) await Navigation.PushAsync(new EditarCervezaPage(cerveza));
         }
     }
 }
