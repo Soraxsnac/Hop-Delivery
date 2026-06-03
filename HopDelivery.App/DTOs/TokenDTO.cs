@@ -4,8 +4,8 @@ namespace HopDelivery.App.DTOs
 {
     public class TokenDTO
     {
-        public string token { get; set; }
+        public string Token { get; set; }
 
-        public DateTimeOffset expiration { get; set; }
+        public DateTimeOffset Expiration { get; set; }
     }
 }
