@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="../HopDelivery.API/HopDelivery.API.csproj" />
+  <Project Path="../HopDelivery.App/HopDelivery.App.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+  <Project Path="HopDelivery/HopDelivery.csproj">
+    <Build Solution="Debug|*" Project="false" />
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>
