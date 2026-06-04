@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using HopDelivery.API.Entities;
 using HopDelivery.API.Entities.Catalogos;
 
 namespace HopDelivery.API.Data
 {
-    public class ApplicationDbContext : DbContext
+    // CAMBIO CRUCIAL: Ahora hereda de IdentityDbContext para traer las tablas de usuarios
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -15,6 +17,7 @@ namespace HopDelivery.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Esta línea es obligatoria para que Identity construya sus tablas sin errores
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Cerveza>().HasData(
