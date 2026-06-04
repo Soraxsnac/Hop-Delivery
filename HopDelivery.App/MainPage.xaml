@@ -16,7 +16,7 @@
                     <Frame Margin="0,5" Padding="10" BorderColor="LightGray" CornerRadius="8">
                         <Grid ColumnDefinitions="80, *, Auto">
 
-                            <Image Grid.Column="0" Source="dotnet_bot.png" HeightRequest="60" WidthRequest="60" Margin="0,0,10,0"/>
+                            <Image Grid.Column="0" Source="https://img.icons8.com/color/96/beer.png" HeightRequest="60" WidthRequest="60" Margin="0,0,10,0"/>
 
                             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                 <Label Text="{Binding Nombre}" FontSize="18" FontAttributes="Bold" />
